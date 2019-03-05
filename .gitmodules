@@ -1,0 +1,3 @@
+[submodule "module-image-picker"]
+	path = module-image-picker
+	url = https://night-coal@bitbucket.org/qw1nz/module-image-picker.git
