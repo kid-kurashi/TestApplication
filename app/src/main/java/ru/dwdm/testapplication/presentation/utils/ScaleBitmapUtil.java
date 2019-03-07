@@ -13,15 +13,13 @@ public class ScaleBitmapUtil {
     public Bitmap smallBitmap() {
         float width = bitmap.getWidth();
         float height = bitmap.getHeight();
-        float targetH = 300;
 
         float coefficient;
-        if (width > height) {
-            coefficient = width / height;
-        } else {
-            coefficient = height / width;
-        }
+        coefficient = width / 300;
 
-        return Bitmap.createScaledBitmap(bitmap, (int) (width * coefficient), (int) (width * coefficient * coefficient), false);
+        width *= coefficient;
+        height *= coefficient;
+
+        return Bitmap.createScaledBitmap(bitmap, (int) width, (int) height, false);
     }
 }
