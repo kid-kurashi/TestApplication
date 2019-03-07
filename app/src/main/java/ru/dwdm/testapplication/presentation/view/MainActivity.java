@@ -3,12 +3,9 @@ package ru.dwdm.testapplication.presentation.view;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 
 import java.io.IOException;
@@ -16,15 +13,17 @@ import java.io.IOException;
 import ru.dwdm.testapplication.R;
 import ru.dwdm.testapplication.databinding.ActivityMainBinding;
 import ru.dwdm.testapplication.presentation.model.factory.ModelFactory;
+import ru.dwdm.testapplication.presentation.utils.BitmapDecodeUtil;
 import ru.dwdm.testapplication.presentation.utils.EmailTextWatcher;
 import ru.dwdm.testapplication.presentation.utils.Fixes;
+import ru.dwdm.testapplication.presentation.utils.IImageCallback;
 import ru.dwdm.testapplication.presentation.utils.PasswordTextWatcher;
 import ru.dwdm.testapplication.presentation.utils.PhoneTextWatcher;
 import ru.dwdm.testapplication.presentation.utils.PickerImageUtil;
-import ru.dwdm.testapplication.presentation.utils.ScaleBitmapUtil;
 import ru.dwdm.testapplication.presentation.view_model.MainViewModel;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements View.OnClickListener {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel>
+        implements View.OnClickListener, IImageCallback {
 
     private static final int CAMERA_REQUEST_CODE = 234;
     private static final int GALLERY_REQUEST_CODE = 231;
@@ -47,13 +46,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 text -> viewModel.onPasswordChanged(text)
         ));
 
-        viewModel.getLiveModel().observe(
-                this, model -> {
-                    if (model != null && !model.getImagePath().isEmpty())
-                        setBitmap(model.getImagePath());
-                }
-        );
-
         initPickerDialog();
         pickerImageUtil = new PickerImageUtil(this, getString(R.string.authority));
         pickerImageUtil.setCameraRequest(CAMERA_REQUEST_CODE);
@@ -62,13 +54,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             pickerImageUtil.requestPermissions();
     }
 
+    @Override
+    public void onImageReady(String path) {
+        setBitmap(path);
+    }
+
     private void setBitmap(String imagePath) {
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-        binding.mainPhoto.setImageBitmap(new ScaleBitmapUtil(bitmap).smallBitmap());
+        if (imagePath != null && !imagePath.isEmpty()) {
+            binding.mainPhoto.setImageBitmap(new BitmapDecodeUtil(imagePath).smallBitmap());
+        }
     }
 
     @Override
-    protected void hackFixHintsForMeizu() {
+    protected void fixHintsForMeizu() {
         new Fixes().hackFixHintsForMeizu(
                 binding.mainPasswordEdit,
                 binding.mainPhoneEdit,
@@ -94,11 +92,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == GALLERY_REQUEST_CODE) {
-                viewModel.onImageSelected(pickerImageUtil.getRealPathFromURI(data.getData()));
+            if (requestCode == GALLERY_REQUEST_CODE && data != null) {
+                viewModel.onImageSelected(pickerImageUtil.getRealPathFromURI(data.getData()), this);
             }
             if (requestCode == CAMERA_REQUEST_CODE) {
-                viewModel.onImageSelected(pickerImageUtil.getFile(CAMERA_REQUEST_CODE, data).getAbsolutePath());
+                viewModel.onImageSelected(pickerImageUtil.getFile(CAMERA_REQUEST_CODE, data).getPath(), this);
             }
         }
     }
@@ -112,13 +110,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void initPickerDialog() {
-
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_pick_image, null);
-
         pickerDialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .create();
-
     }
 
     private void pickFromCamera() {

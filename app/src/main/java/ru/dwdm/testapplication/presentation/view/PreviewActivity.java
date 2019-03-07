@@ -23,7 +23,7 @@ public class PreviewActivity extends BaseActivity<ActivityPreviewBinding, Previe
     }
 
     @Override
-    protected void hackFixHintsForMeizu() {
+    protected void fixHintsForMeizu() {
 
     }
 

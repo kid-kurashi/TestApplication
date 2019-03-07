@@ -54,23 +54,31 @@ public class PickerImageUtil {
     }
 
     public void openCamera() throws IOException {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            tempImage = new TempImage(activity.getApplicationContext());
-            File photoFile = tempImage.getFile();
-            Uri uri = FileProvider.getUriForFile(activity.getApplicationContext(), authority, photoFile);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-            activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), cameraRequestCode);
+        if (checkPermissions()) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                tempImage = new TempImage(activity.getApplicationContext());
+                File photoFile = tempImage.getFile();
+                Uri uri = FileProvider.getUriForFile(activity.getApplicationContext(), authority, photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), cameraRequestCode);
+            }
+        } else {
+            requestPermissions();
         }
     }
 
     public void openGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setType("image/*");
-        if (intent.resolveActivity(activity.getPackageManager()) != null) {
-            activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), galleryRequestCode);
+        if (checkPermissions()) {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), galleryRequestCode);
+            }
+        } else {
+            requestPermissions();
         }
     }
 

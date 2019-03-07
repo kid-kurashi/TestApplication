@@ -2,14 +2,9 @@ package ru.dwdm.testapplication.presentation.view;
 
 import android.annotation.SuppressLint;
 import android.databinding.ViewDataBinding;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-
-import java.util.Locale;
 
 import ru.dwdm.testapplication.App;
 import ru.dwdm.testapplication.presentation.view_model.BaseViewModel;
@@ -30,8 +25,8 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         if (viewModel != null) {
             getLifecycle().addObserver(viewModel);
             attachBinding();
+            fixHintsForMeizu();
         }
-        hackFixHintsForMeizu();
     }
 
 
@@ -39,7 +34,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, VM extends BaseVie
         return app;
     }
 
-    protected abstract void hackFixHintsForMeizu();
+    protected abstract void fixHintsForMeizu();
 
     protected abstract void initBinding();
 

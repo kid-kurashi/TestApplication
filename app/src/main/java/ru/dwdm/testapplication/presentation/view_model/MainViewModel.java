@@ -3,8 +3,8 @@ package ru.dwdm.testapplication.presentation.view_model;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
-import ru.dwdm.testapplication.presentation.model.BaseModel;
 import ru.dwdm.testapplication.presentation.model.MainModel;
+import ru.dwdm.testapplication.presentation.utils.IImageCallback;
 
 public class MainViewModel extends BaseViewModel<MainModel> {
 
@@ -33,8 +33,9 @@ public class MainViewModel extends BaseViewModel<MainModel> {
         getModel().setPassword(text);
     }
 
-    public void onImageSelected(String realPathFromURI) {
+    public void onImageSelected(String realPathFromURI, IImageCallback callback) {
         getModel().setImagePath(realPathFromURI);
         getLiveModel().postValue(getModel());
+        callback.onImageReady(realPathFromURI);
     }
 }
