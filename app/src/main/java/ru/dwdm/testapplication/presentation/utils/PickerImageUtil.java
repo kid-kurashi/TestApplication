@@ -28,8 +28,6 @@ public class PickerImageUtil {
     private int cameraRequestCode = NONE_REQUEST_CODE;
     private int galleryRequestCode = NONE_REQUEST_CODE;
 
-    public static final String TAG = PickerImageUtil.class.getSimpleName() + ".TAG_FRAGMENT_PICK";
-
     public static final String[] ARRAY_PERMISSIONS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
