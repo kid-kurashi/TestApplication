@@ -1,98 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".presentation.view.PreviewActivity">
 
-    <ScrollView
+<layout>
+
+    <data>
+
+        <variable
+            name="model"
+            type="ru.dwdm.testapplication.presentation.model.PreviewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/colorWhite"
+        tools:context=".presentation.view.PreviewActivity">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/preview_photo_wrap"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="1dp"
-                app:cardElevation="6dp">
-
-                <ImageView
-                    android:id="@+id/preview_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_launcher_background" />
-            </android.support.v7.widget.CardView>
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/preview_info_wrap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="70dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/preview_email"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/preview_photo_wrap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawableLeft="@drawable/ic_email"
-                    android:drawablePadding="16dp"
-                    android:text="some.email@somebox.com"
-                    tools:text="some.email@somebox.com" />
+                    app:cardCornerRadius="1dp"
+                    app:cardElevation="6dp">
 
-                <TextView
-                    android:id="@+id/preview_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawableLeft="@drawable/ic_phone"
-                    android:drawablePadding="16dp"
-                    android:text="+7 999 999 99 99"
-                    tools:text="+7 999 999 99 99" />
+                    <ImageView
+                        android:id="@+id/preview_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ic_launcher_background" />
+                </android.support.v7.widget.CardView>
 
-                <TextView
-                    android:id="@+id/preview_password"
+                <LinearLayout
+                    android:id="@+id/preview_info_wrap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_password"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:drawablePadding="16dp"
-                    android:text="ABVGDEEZH"
-                    tools:text="ABVGDEEZH" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="70dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/preview_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawableLeft="@drawable/ic_email"
+                        android:drawablePadding="16dp"
+                        android:text="some.email@somebox.com"
+                        tools:text="some.email@somebox.com" />
+
+                    <TextView
+                        android:id="@+id/preview_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:drawableStart="@drawable/ic_phone"
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:drawablePadding="16dp"
+                        android:text="+7 999 999 99 99"
+                        tools:text="+7 999 999 99 99" />
+
+                    <TextView
+                        android:id="@+id/preview_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_password"
+                        android:drawableLeft="@drawable/ic_password"
+                        android:drawablePadding="16dp"
+                        android:text="ABVGDEEZH"
+                        tools:text="ABVGDEEZH" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
-    <Button
-        android:id="@+id/preview_send_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/preview_send_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

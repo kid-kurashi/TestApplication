@@ -1,18 +1,26 @@
 package ru.dwdm.testapplication.presentation.view;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+
+import java.io.IOException;
 
 import ru.dwdm.testapplication.R;
 import ru.dwdm.testapplication.databinding.ActivityMainBinding;
-import ru.dwdm.testapplication.presentation.model.MainModel;
 import ru.dwdm.testapplication.presentation.model.factory.ModelFactory;
+import ru.dwdm.testapplication.presentation.utils.EmailTextWatcher;
+import ru.dwdm.testapplication.presentation.utils.Fixes;
+import ru.dwdm.testapplication.presentation.utils.PasswordTextWatcher;
+import ru.dwdm.testapplication.presentation.utils.PhoneTextWatcher;
+import ru.dwdm.testapplication.presentation.utils.PickerImageUtil;
+import ru.dwdm.testapplication.presentation.utils.ScaleBitmapUtil;
 import ru.dwdm.testapplication.presentation.view_model.MainViewModel;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements View.OnClickListener {
@@ -21,15 +29,49 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private static final int GALLERY_REQUEST_CODE = 231;
 
     private AlertDialog pickerDialog;
+    private PickerImageUtil pickerImageUtil;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initPicker();
+        binding.mainEmailEdit.addTextChangedListener(new EmailTextWatcher(
+                binding.mainEmailLayout,
+                text -> viewModel.onEmailChanged(text)));
+        binding.mainPhoneEdit.addTextChangedListener(new PhoneTextWatcher(
+                binding.mainPhoneLayout,
+                text -> viewModel.onPhoneChanged(text)));
+        binding.mainPasswordEdit.addTextChangedListener(new PasswordTextWatcher(
+                binding.mainPasswordLayout,
+                text -> viewModel.onPasswordChanged(text)
+        ));
 
-        binding.mainSelectPhoto.setOnClickListener(this);
-        binding.mainButtonValidate.setOnClickListener(this);
+        viewModel.getLiveModel().observe(
+                this, model -> {
+                    if (model != null && !model.getImagePath().isEmpty())
+                        setBitmap(model.getImagePath());
+                }
+        );
+
+        initPickerDialog();
+        pickerImageUtil = new PickerImageUtil(this, getString(R.string.authority));
+        pickerImageUtil.setCameraRequest(CAMERA_REQUEST_CODE);
+        pickerImageUtil.setGalleryRequest(GALLERY_REQUEST_CODE);
+        if (!pickerImageUtil.checkPermissions())
+            pickerImageUtil.requestPermissions();
+    }
+
+    private void setBitmap(String imagePath) {
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        binding.mainPhoto.setImageBitmap(new ScaleBitmapUtil(bitmap).smallBitmap());
+    }
+
+    @Override
+    protected void hackFixHintsForMeizu() {
+        new Fixes().hackFixHintsForMeizu(
+                binding.mainPasswordEdit,
+                binding.mainPhoneEdit,
+                binding.mainEmailEdit);
     }
 
     @Override
@@ -44,7 +86,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     protected void attachBinding() {
-        ((MutableLiveData<MainModel>) viewModel.getModel()).observe(this, model -> binding.setModel(model));
+        viewModel.getLiveModel().observe(this, model -> binding.setModel(model));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_REQUEST_CODE) {
+                viewModel.onImageSelected(pickerImageUtil.getRealPathFromURI(data.getData()));
+            }
+            if (requestCode == CAMERA_REQUEST_CODE) {
+                viewModel.onImageSelected(pickerImageUtil.getFile(CAMERA_REQUEST_CODE, data).getAbsolutePath());
+            }
+        }
     }
 
     private void closePicker() {
@@ -55,7 +110,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         pickerDialog.show();
     }
 
-    private void initPicker() {
+    private void initPickerDialog() {
 
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_pick_image, null);
 
@@ -66,26 +121,48 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void pickFromCamera() {
-
+        pickerDialog.dismiss();
+        try {
+            pickerImageUtil.openCamera();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void pickFromGallery() {
-
+        pickerDialog.dismiss();
+        pickerImageUtil.openGallery();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_button_validate: {
-                viewModel.buttonValidateClick();
+                validateClick();
             }
             break;
             case R.id.main_select_photo: {
-
+                openPicker();
             }
             break;
+            case R.id.dialog_pick_image_cancel: {
+                closePicker();
+            }
+            break;
+            case R.id.dialog_pick_image_camera: {
+                pickFromCamera();
+            }
+            break;
+            case R.id.dialog_pick_image_gallery: {
+                pickFromGallery();
+            }
             default:
                 break;
         }
+    }
+
+    private void validateClick() {
+        Intent intent = new Intent(this, PreviewActivity.class);
+        startActivity(intent);
     }
 }

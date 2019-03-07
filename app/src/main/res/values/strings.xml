@@ -3,6 +3,12 @@
     <string name="hint_email">Email</string>
     <string name="hint_phone">Phone</string>
     <string name="hint_password">Password</string>
-    <string name="view">View</string>
     <string name="cancel">Cancel</string>
+    <string name="view">View</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="pick_image">Pick image</string>
+    <string name="not_on_local_storage">This resource must be exist on local storage</string>
+    <string name="source_picture">Source</string>
+    <string name="authority">ru.dwdm.testapplication</string>
 </resources>
