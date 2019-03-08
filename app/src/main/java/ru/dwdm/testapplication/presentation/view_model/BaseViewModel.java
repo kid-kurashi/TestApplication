@@ -14,7 +14,7 @@ public abstract class BaseViewModel<M extends BaseModel> extends AndroidViewMode
     protected final App app;
     protected MutableLiveData<M> model = new MutableLiveData<>();
 
-    public BaseViewModel(@NonNull Application application) {
+    BaseViewModel(@NonNull Application application) {
         super(application);
         this.app = (App) application;
         initData();
@@ -34,7 +34,4 @@ public abstract class BaseViewModel<M extends BaseModel> extends AndroidViewMode
         return model.getValue();
     }
 
-    public void updateModel(M data) {
-        model.postValue(data);
-    }
 }

@@ -1,11 +1,27 @@
 package ru.dwdm.testapplication.presentation.model;
 
+import java.util.HashMap;
+
+import ru.dwdm.testapplication.domain.object.ValidationObject;
+
 public class MainModel extends BaseModel {
 
     private String imagePath = "";
     private String email = "";
     private String phone = "";
     private String password = "";
+
+    private HashMap<ValidationObject, Boolean> errors = new HashMap<>();
+
+    public MainModel() {
+        for (ValidationObject key : ValidationObject.values()) {
+            errors.put(key, true);
+        }
+    }
+
+    public HashMap<ValidationObject, Boolean> getErrors() {
+        return errors;
+    }
 
     public String getImagePath() {
         return imagePath;

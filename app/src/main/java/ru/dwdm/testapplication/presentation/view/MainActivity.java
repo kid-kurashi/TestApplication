@@ -5,17 +5,21 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import ru.dwdm.testapplication.R;
 import ru.dwdm.testapplication.databinding.ActivityMainBinding;
+import ru.dwdm.testapplication.domain.object.ValidationObject;
 import ru.dwdm.testapplication.presentation.model.factory.ModelFactory;
 import ru.dwdm.testapplication.presentation.utils.EmailTextWatcher;
+import ru.dwdm.testapplication.presentation.utils.ErrorDispatcher;
 import ru.dwdm.testapplication.presentation.utils.Fixes;
 import ru.dwdm.testapplication.presentation.utils.IImageCallback;
 import ru.dwdm.testapplication.presentation.utils.PasswordTextWatcher;
@@ -32,9 +36,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private AlertDialog pickerDialog;
     private PickerImageUtil pickerImageUtil;
 
+    private HashMap<ValidationObject, TextInputLayout> layoutHashMap = new HashMap<>();
+    private ErrorDispatcher errorDispatcher;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        errorDispatcher = new ErrorDispatcher();
+
+        setImage(viewModel.getModel().getImagePath());
 
         binding.mainEmailEdit.addTextChangedListener(new EmailTextWatcher(
                 binding.mainEmailLayout,
@@ -53,6 +64,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         pickerImageUtil.setGalleryRequest(GALLERY_REQUEST_CODE);
         if (!pickerImageUtil.checkPermissions())
             pickerImageUtil.requestPermissions();
+
+        putLayoutsToMap();
+    }
+
+    private void putLayoutsToMap() {
+        layoutHashMap.put(ValidationObject.EMAIL, binding.mainEmailLayout);
+        layoutHashMap.put(ValidationObject.PASS, binding.mainPasswordLayout);
+        layoutHashMap.put(ValidationObject.PHONE, binding.mainPhoneLayout);
     }
 
     @Override
@@ -159,8 +178,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void validateClick() {
-        viewModel.onButtonValidateClick();
-        Intent intent = new Intent(this, PreviewActivity.class);
-        startActivity(intent);
+        viewModel.onButtonValidateClick(validationResult -> {
+            if (validationResult) {
+                startActivity(new Intent(MainActivity.this, PreviewActivity.class));
+            } else {
+                errorDispatcher.dispatch(viewModel.getModel(), layoutHashMap, this);
+            }
+        });
     }
 }

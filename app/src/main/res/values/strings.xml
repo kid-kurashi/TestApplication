@@ -9,6 +9,14 @@
     <string name="camera">Camera</string>
     <string name="pick_image">Pick image</string>
     <string name="not_on_local_storage">This resource must be exist on local storage</string>
-    <string name="source_picture">Source</string>
+    <string name="source">Source</string>
     <string name="authority">ru.dwdm.testapplication</string>
+    <string name="email_error">Invalid address</string>
+    <string name="phone_error">Invalid phone</string>
+    <string name="password_error">Invalid password</string>
+    <string name="photo_error">Please select photo</string>
+    <string name="description">Image</string>
+    <string name="send_by_email">Send by email</string>
+    <string name="send_by">Send by:</string>
+    <string name="app_not_found">No one application found</string>
 </resources>

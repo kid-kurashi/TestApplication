@@ -9,7 +9,7 @@ public abstract class BaseTextWatcher implements TextWatcher {
     private TextInputLayout textInputLayout;
     private ITextCallback ITextCallback;
 
-    public BaseTextWatcher(TextInputLayout textInputLayout, ITextCallback ITextCallback) {
+    BaseTextWatcher(TextInputLayout textInputLayout, ITextCallback ITextCallback) {
         this.textInputLayout = textInputLayout;
         this.ITextCallback = ITextCallback;
     }

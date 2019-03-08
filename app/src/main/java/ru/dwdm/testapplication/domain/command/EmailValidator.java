@@ -1,4 +1,4 @@
-package ru.dwdm.testapplication.domain.validator;
+package ru.dwdm.testapplication.domain.command;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,13 +10,10 @@
             type="ru.dwdm.testapplication.presentation.model.PreviewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        tools:context=".presentation.view.PreviewActivity">
+        android:background="@color/colorWhite">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -41,6 +39,7 @@
                         android:id="@+id/preview_photo"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:contentDescription="@string/description"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_launcher_background" />
                 </android.support.v7.widget.CardView>
@@ -65,8 +64,7 @@
                         android:drawableStart="@drawable/ic_email"
                         android:drawableLeft="@drawable/ic_email"
                         android:drawablePadding="16dp"
-                        android:text="some.email@somebox.com"
-                        tools:text="some.email@somebox.com" />
+                        android:text="@{model.email}" />
 
                     <TextView
                         android:id="@+id/preview_phone"
@@ -76,8 +74,7 @@
                         android:drawableStart="@drawable/ic_phone"
                         android:drawableLeft="@drawable/ic_phone"
                         android:drawablePadding="16dp"
-                        android:text="+7 999 999 99 99"
-                        tools:text="+7 999 999 99 99" />
+                        android:text="@{model.phone}" />
 
                     <TextView
                         android:id="@+id/preview_password"
@@ -86,24 +83,34 @@
                         android:drawableStart="@drawable/ic_password"
                         android:drawableLeft="@drawable/ic_password"
                         android:drawablePadding="16dp"
-                        android:text="ABVGDEEZH"
-                        tools:text="ABVGDEEZH" />
+                        android:text="@{model.password}" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/preview_send_button"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/preview_send_button"
+                style="@style/TextAppearance.AppCompat.Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_margin="0dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/send_by_email"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:onClick="onClick"/>
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 

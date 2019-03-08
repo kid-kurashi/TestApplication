@@ -1,4 +1,4 @@
-package ru.dwdm.testapplication.domain.validator;
+package ru.dwdm.testapplication.domain.command;
 
 public class PhotoValidator extends Validator<String> {
 

@@ -20,7 +20,7 @@ import ru.dwdm.testapplication.domain.TempImage;
 
 public class PickerImageUtil {
 
-    public static final int NONE_REQUEST_CODE = -1;
+    private static final int NONE_REQUEST_CODE = -1;
 
     private final Activity activity;
     private final String authority;
@@ -28,7 +28,7 @@ public class PickerImageUtil {
     private int cameraRequestCode = NONE_REQUEST_CODE;
     private int galleryRequestCode = NONE_REQUEST_CODE;
 
-    public static final String[] ARRAY_PERMISSIONS = {
+    private static final String[] ARRAY_PERMISSIONS = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA};
@@ -41,14 +41,12 @@ public class PickerImageUtil {
         this.authority = authority;
     }
 
-    public PickerImageUtil setCameraRequest(int cameraRequest) {
+    public void setCameraRequest(int cameraRequest) {
         this.cameraRequestCode = cameraRequest;
-        return this;
     }
 
-    public PickerImageUtil setGalleryRequest(int galleryRequest) {
+    public void setGalleryRequest(int galleryRequest) {
         this.galleryRequestCode = galleryRequest;
-        return this;
     }
 
     public void openCamera() throws IOException {
@@ -60,7 +58,7 @@ public class PickerImageUtil {
                 File photoFile = tempImage.getFile();
                 Uri uri = FileProvider.getUriForFile(activity.getApplicationContext(), authority, photoFile);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), cameraRequestCode);
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source)), cameraRequestCode);
             }
         } else {
             requestPermissions();
@@ -73,7 +71,7 @@ public class PickerImageUtil {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setType("image/*");
             if (intent.resolveActivity(activity.getPackageManager()) != null) {
-                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source_picture)), galleryRequestCode);
+                activity.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.source)), galleryRequestCode);
             }
         } else {
             requestPermissions();
