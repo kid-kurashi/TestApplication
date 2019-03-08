@@ -121,10 +121,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
     }
 
-    private void closePicker() {
-        pickerDialog.dismiss();
-    }
-
     private void openPicker() {
         pickerDialog.show();
     }
@@ -159,10 +155,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
             break;
             case R.id.main_select_photo: {
                 openPicker();
-            }
-            break;
-            case R.id.dialog_pick_image_cancel: {
-                closePicker();
             }
             break;
             case R.id.dialog_pick_image_camera: {

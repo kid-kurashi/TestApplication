@@ -56,9 +56,8 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="268dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
                 android:orientation="vertical">
@@ -67,16 +66,17 @@
                     android:id="@+id/main_email_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_email">
+                    android:hint="@string/hint_email"
+                    android:layout_marginTop="8dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/main_email_edit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_email"
+                        android:layout_height="?attr/actionBarSize"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        android:nextFocusForward="@id/main_phone_edit" />
+                        android:nextFocusForward="@id/main_phone_edit"
+                        android:padding="12dp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -86,18 +86,18 @@
                     app:counterMaxLength="12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="72dp"
+                    android:layout_marginTop="92dp"
                     android:hint="@string/hint_phone">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/main_phone_edit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_phone"
+                        android:layout_height="?attr/actionBarSize"
                         android:inputType="phone"
                         android:maxLength="12"
                         android:maxLines="1"
-                        android:nextFocusForward="@id/main_password_edit" />
+                        android:nextFocusForward="@id/main_password_edit"
+                        android:padding="12dp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -106,31 +106,40 @@
                     app:passwordToggleEnabled="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="144dp"
+                    android:layout_marginTop="178dp"
                     android:hint="@string/hint_password">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/main_password_edit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/hint_password"
+                        android:layout_height="?attr/actionBarSize"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        android:nextFocusForward="@id/main_email_edit" />
+                        android:nextFocusForward="@id/main_email_edit"
+                        android:padding="12dp"/>
 
                 </android.support.design.widget.TextInputLayout>
             </FrameLayout>
 
-            <Button
-                android:id="@+id/main_button_validate"
-                style="@style/ButtonColored"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_margin="16dp"
-                android:onClick="onClick"
-                android:text="@string/view"
-                android:textAllCaps="true"
-                android:theme="@style/ButtonColored" />
+                android:layout_height="68dp"
+                android:layout_gravity="top">
+                <Button
+                    android:id="@+id/main_button_validate"
+                    style="@style/ButtonColored"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="onClick"
+                    android:text="@string/view"
+                    android:textAllCaps="true"
+                    android:theme="@style/ButtonColored" />
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 </layout>

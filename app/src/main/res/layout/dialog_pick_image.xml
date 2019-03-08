@@ -3,9 +3,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="24dp">
 
     <TextView
         android:id="@+id/dialog_pick_image_title"
@@ -39,8 +40,8 @@
             android:focusable="true"
             android:gravity="center_vertical|start"
             android:onClick="onClick"
-            android:paddingStart="72dp"
-            android:paddingLeft="72dp"
+            android:paddingStart="76dp"
+            android:paddingLeft="76dp"
             android:text="@string/camera"
             android:textAlignment="gravity"
             android:textAllCaps="false"
@@ -71,23 +72,11 @@
             android:focusable="true"
             android:gravity="center_vertical|start"
             android:onClick="onClick"
-            android:paddingStart="72dp"
-            android:paddingLeft="72dp"
+            android:paddingStart="76dp"
+            android:paddingLeft="76dp"
             android:text="@string/gallery"
             android:textAlignment="gravity"
             android:textAllCaps="false"
             tools:ignore="RtlSymmetry" />
     </FrameLayout>
-
-    <Button
-        android:id="@+id/dialog_pick_image_cancel"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="end"
-        android:layout_margin="8dp"
-        android:onClick="onClick"
-        android:text="@string/cancel"
-        android:textColor="@color/colorPrimary"
-        android:theme="@style/Widget.AppCompat.Button.Borderless" />
 </LinearLayout>

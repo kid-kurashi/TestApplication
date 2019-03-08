@@ -17,6 +17,6 @@
     <string name="photo_error">Please select photo</string>
     <string name="description">Image</string>
     <string name="send_by_email">Send by email</string>
-    <string name="send_by">Send by:</string>
+    <string name="send_by">Send email by</string>
     <string name="app_not_found">No one application found</string>
 </resources>
