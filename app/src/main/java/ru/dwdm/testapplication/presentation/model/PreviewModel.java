@@ -1,5 +1,7 @@
 package ru.dwdm.testapplication.presentation.model;
 
+import android.util.Log;
+
 public class PreviewModel extends BaseModel {
 
     private String imagePath = "";
@@ -26,7 +28,19 @@ public class PreviewModel extends BaseModel {
     }
 
     public String getPhone() {
-        return phone;
+        if (!phone.isEmpty()) {
+            Log.e("PHONE", phone);
+            return phone.substring(0, 2) +
+                    " (" +
+                    phone.substring(2, 5) +
+                    ") " +
+                    phone.substring(5, 8) +
+                    " " +
+                    phone.substring(8, 10) +
+                    " " +
+                    phone.substring(10, 12);
+        }
+        return "";
     }
 
     public String getPassword() {
