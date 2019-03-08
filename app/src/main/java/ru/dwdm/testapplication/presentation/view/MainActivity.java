@@ -8,12 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+
 import java.io.IOException;
 
 import ru.dwdm.testapplication.R;
 import ru.dwdm.testapplication.databinding.ActivityMainBinding;
 import ru.dwdm.testapplication.presentation.model.factory.ModelFactory;
-import ru.dwdm.testapplication.presentation.utils.BitmapDecodeUtil;
 import ru.dwdm.testapplication.presentation.utils.EmailTextWatcher;
 import ru.dwdm.testapplication.presentation.utils.Fixes;
 import ru.dwdm.testapplication.presentation.utils.IImageCallback;
@@ -56,12 +57,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void onImageReady(String path) {
-        setBitmap(path);
+        setImage(path);
     }
 
-    private void setBitmap(String imagePath) {
+    private void setImage(String imagePath) {
         if (imagePath != null && !imagePath.isEmpty()) {
-            binding.mainPhoto.setImageBitmap(new BitmapDecodeUtil(imagePath).smallBitmap());
+            Glide.with(this).load(imagePath).into(binding.mainPhoto);
         }
     }
 
@@ -158,6 +159,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void validateClick() {
+        viewModel.onButtonValidateClick();
         Intent intent = new Intent(this, PreviewActivity.class);
         startActivity(intent);
     }
